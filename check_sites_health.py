@@ -6,16 +6,16 @@ import datetime
 
 def load_urls4check(path_to_file):
     with open(path_to_file) as file_object:
-        return file_object.readlines()
+        domains = file_object.readlines()
+        return [domain.strip() for domain in domains]
 
-
-def is_server_respond_with_200(url):
+def is_domain_ok(url):
     response = requests.get(url)
     return response.ok
 
 
-def get_domain_expiration_date(domain_name):
-    return whois.query(domain_name).expiration_date - datetime.datetime.today()
+def get_domain_expiration_date(domain):
+    return whois.query(domain).expiration_date - datetime.datetime.today()
 
 
 if __name__ == '__main__':
@@ -26,10 +26,9 @@ if __name__ == '__main__':
     except FileNotFoundError:
         exit('File not found.')
 
-    sites = load_urls4check(file_with_url)
-    for site in sites:
-        site_url = site.strip()
-        print('Domain:', site_url)
-        print('Respond is 200:', is_server_respond_with_200(site_url))
-        print('Domain expires in', get_domain_expiration_date(site_url))
-        print('----------------------')
+    domains = load_urls4check(file_with_url)
+    for domain in domains:
+        print('Domain:', domain)
+        print('Domain is ok:', is_domain_ok(domain))
+        print('Domain expires in', get_domain_expiration_date(domain))
+        print('-'*20)

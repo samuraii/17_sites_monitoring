@@ -4,7 +4,13 @@ Script allows to monitor sites. It checks if the status code is 200 and reports 
 
 # How to use
 
-Pass file with urls to sctipt:
+Before using script install the required packages.
+
+```bash
+pip install requirements.txt
+```
+
+To run script pass file with urls to sctipt:
 
 ```bash
 python check_sites_health.py <path_to_file>
