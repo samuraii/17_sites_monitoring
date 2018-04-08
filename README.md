@@ -1,6 +1,31 @@
 # Sites Monitoring Utility
 
-[TODO. There will be project description]
+Script allows to monitor sites. It checks if the status code is 200 and reports the time left till domain expiration. 
+
+# How to use
+
+Pass file with urls to sctipt:
+
+```bash
+python check_sites_health.py <path_to_file>
+```
+
+Output:
+
+```bash
+Domain: https://www.yandex.ru
+Respond is 200: True
+Domain expires in 175 days, 3:43:41.036310
+----------------------
+Domain: https://www.google.ru
+Respond is 200: True
+Domain expires in 330 days, 3:43:40.027355
+----------------------
+Domain: http://www.phyz-math.ru
+Respond is 200: True
+Domain expires in 196 days, 1:44:42.107101
+----------------------
+```
 
 # Project Goals
 
