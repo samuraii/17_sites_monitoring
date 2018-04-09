@@ -1,7 +1,7 @@
 import sys
 import requests
 import whois
-import datetime
+from datetime import datetime, timedelta
 
 
 def load_urls4check(path_to_file):
@@ -10,24 +10,30 @@ def load_urls4check(path_to_file):
         return [domain.strip() for domain in domains]
 
 
-def is_domain_ok(url):
+def is_server_ok(url):
     response = requests.get(url)
     return response.ok
 
 
-def domain_is_paid_30_days_or_more(domain, days=30):
-    exp_date = whois.query(domain).expiration_date
-    return datetime.datetime.today() + datetime.timedelta(days) <= exp_date
-
+def is_domain_paid(domain, days=30):
+    exp_date = whois.whois(domain).expiration_date
+    time_delta = datetime.today() + timedelta(days)
+    if type(exp_date) is list:
+        return exp_date[0] > time_delta
+    else:
+        return exp_date > time_delta
 
 if __name__ == '__main__':
     try:
         file_with_url = sys.argv[1]
     except IndexError:
         exit('File not passed to script.')
+    except FileNotFoundError:
+        exit('File not found.')
+
     domains = load_urls4check(file_with_url)
     for domain in domains:
         print('Domain:', domain)
-        print('It is ok:', is_domain_ok(domain))
-        print('It is paid >= 30 days:', domain_is_paid_30_days_or_more(domain))
+        print('Is it ok:', is_server_ok(domain))
+        print('Is is paid', is_domain_paid(domain))
         print('-'*20)

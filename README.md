@@ -1,6 +1,6 @@
 # Sites Monitoring Utility
 
-Script allows to monitor sites. It checks if the status code is 200 and reports the time left till domain expiration. 
+Script allows to monitor sites. It checks if the response of the server is ok (not 4\*\* or 5\*\*) and if the domain name is paid based on the information of whois service. 
 
 # How to use
 
@@ -20,17 +20,17 @@ Output:
 
 ```bash
 Domain: https://www.yandex.ru
-Respond is 200: True
-Domain expires in 175 days, 3:43:41.036310
-----------------------
-Domain: https://www.google.ru
-Respond is 200: True
-Domain expires in 330 days, 3:43:40.027355
-----------------------
-Domain: http://www.phyz-math.ru
-Respond is 200: True
-Domain expires in 196 days, 1:44:42.107101
-----------------------
+Is it ok: True
+Is is paid True
+--------------------
+Domain: https://www.google.com
+Is it ok: True
+Is is paid True
+--------------------
+Domain: http://phyz-math.ru
+Is it ok: True
+Is is paid True
+--------------------
 ```
 
 # Project Goals
