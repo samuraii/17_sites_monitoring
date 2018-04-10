@@ -18,22 +18,23 @@ def is_server_ok(url):
 def is_domain_paid(domain, days=30):
     exp_date = whois.whois(domain).expiration_date
     time_delta = datetime.today() + timedelta(days)
-    if type(exp_date) is list:
-        return exp_date[0] > time_delta
-    else:
-        return exp_date > time_delta
+    try:
+        if type(exp_date) is list:
+            return exp_date[0] > time_delta
+        else:
+            return exp_date > time_delta
+    except TypeError:
+        return 'No expiration date found.'
 
 if __name__ == '__main__':
     try:
         file_with_url = sys.argv[1]
-    except IndexError:
+    except (IndexError, FileNotFoundError):
         exit('File not passed to script.')
-    except FileNotFoundError:
-        exit('File not found.')
 
     domains = load_urls4check(file_with_url)
     for domain in domains:
         print('Domain:', domain)
         print('Is it ok:', is_server_ok(domain))
-        print('Is is paid', is_domain_paid(domain))
+        print('Is it paid:', is_domain_paid(domain))
         print('-'*20)
